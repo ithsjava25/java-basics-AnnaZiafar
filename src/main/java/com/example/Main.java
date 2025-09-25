@@ -58,14 +58,19 @@ public class Main {
             System.out.println("You have chosen: " + zoneArg);
         }
 
-        Args zone = new Args(zoneArg);
+        Args zone = new Args();
 
-        return testy;
+        return zone;
     }
 
 
     public static void printHelpMenu() {
-        System.out.println("Help");
+        System.out.printf("Följande prompter är giltiga i detta program: %n" +
+                "--zone SE1|SE2|SE3|SE4 (obligatorisk) %n" +
+                "--date YYYY-MM-DD (valfri, standardinställningen är dagens datum) %n" +
+                "--sorted (valfri, visar priser i fallande ordning) %n" +
+                "--charging 2h|4h|8h (valfri, hittar optimalt tidsspann för laddning) %n" +
+                "--help (valfri, visar information om programmet) %n");
     }
 
     public static class Args{
