@@ -36,7 +36,6 @@ public class Main {
 
         List<Elpris> prislista = pricelistSetter(date, prisklass, elpriserAPI);
 
-        System.out.println("Priser för " + date + " i prisområde " + prisklass + ":");
         if(contains(args, "--sorted")){
             printPrices(sortedPrices(prislista));
         } else {
@@ -135,7 +134,7 @@ public class Main {
             pricelist.addAll(pricelist2);
         }
 
-        if(pricelist.size() > 48){
+        if(pricelist.size() > 24){
             return calculateHourlyPrices(pricelist);
         }
         return pricelist;
@@ -175,9 +174,11 @@ public class Main {
     }
 
     private static void printPrices(List<Elpris> listOfPrices){
+        System.out.printf("%-13s %-13s %s %n", "Datum: ", "Klockslag: ", "Pris: ");
         for(Elpris elpris : listOfPrices){
-            System.out.println(HOUR_FORMATTER.format(elpris.timeStart()) + "-" +
-                    HOUR_FORMATTER.format(elpris.timeStart().plusHours(1)) + " " +
+            LocalDate elprisDate = elpris.timeStart().toLocalDate();
+            System.out.println(elprisDate + "    " + HOUR_FORMATTER.format(elpris.timeStart()) + "-" +
+                    HOUR_FORMATTER.format(elpris.timeStart().plusHours(1)) + "         " +
                     ORE_FORMATTER.format(elpris.sekPerKWh() * TO_ORE) + " öre.");
         }
     }
