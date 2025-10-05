@@ -5,7 +5,6 @@ import com.example.api.ElpriserAPI.Elpris;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +23,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String zone = helpOrZone(args);
+        String zone = whichZone(args);
 
         if(zone == null){
             return;
@@ -58,7 +57,7 @@ public class Main {
 
     }
 
-    private static String helpOrZone(String[] args) {
+    private static String whichZone(String[] args) {
         if (args.length == 0 || contains(args, "--help")) {
             printHelpMenu();
             return null;
@@ -179,7 +178,7 @@ public class Main {
             LocalDate elprisDate = elpris.timeStart().toLocalDate();
             System.out.println(elprisDate + "    " + HOUR_FORMATTER.format(elpris.timeStart()) + "-" +
                     HOUR_FORMATTER.format(elpris.timeStart().plusHours(1)) + "         " +
-                    ORE_FORMATTER.format(elpris.sekPerKWh() * TO_ORE) + " öre.");
+                    ORE_FORMATTER.format(elpris.sekPerKWh() * TO_ORE) + " öre");
         }
     }
 
