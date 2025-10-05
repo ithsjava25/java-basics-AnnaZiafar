@@ -4,6 +4,7 @@ import com.example.api.ElpriserAPI;
 import com.example.api.ElpriserAPI.Elpris;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
@@ -16,7 +17,7 @@ import static com.example.api.ElpriserAPI.Prisklass.*;
 public class Main {
     private static final DateTimeFormatter HOUR_FORMATTER = DateTimeFormatter.ofPattern("HH");
     private static final DateTimeFormatter HOUR_MINUTE_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-    private static final DecimalFormat ORE_FORMATTER = new DecimalFormat("0.00");
+    private static final DecimalFormat ORE_FORMATTER = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.of("sv", "SE")));
     private static final int TO_ORE = 100;
     private static final double TO_EURO = 0.0908;
     private static final int QUARTERS_IN_HOUR = 4;
