@@ -145,10 +145,10 @@ class MainTest {
     @Test
     void displaySortedPrices_whenRequested() {
         String mockJson = """
-                [{"SEK_per_kWh":0.30,"EUR_per_kWh":0.03,"EXR":10.0,"time_start":"2025-09-04T00:00:00+02:00","time_end":"2025-09-04T01:00:00+02:00"},
-                 {"SEK_per_kWh":0.10,"EUR_per_kWh":0.01,"EXR":10.0,"time_start":"2025-09-04T01:00:00+02:00","time_end":"2025-09-04T02:00:00+02:00"},
-                 {"SEK_per_kWh":0.20,"EUR_per_kWh":0.02,"EXR":10.0,"time_start":"2025-09-04T02:00:00+02:00","time_end":"2025-09-04T03:00:00+02:00"},
-                 {"SEK_per_kWh":0.10,"EUR_per_kWh":0.01,"EXR":10.0,"time_start":"2025-09-04T03:00:00+02:00","time_end":"2025-09-04T04:00:00+02:00"}]""";
+            [{"SEK_per_kWh":0.30,"EUR_per_kWh":0.03,"EXR":10.0,"time_start":"2025-09-04T00:00:00+02:00","time_end":"2025-09-04T01:00:00+02:00"},
+             {"SEK_per_kWh":0.10,"EUR_per_kWh":0.01,"EXR":10.0,"time_start":"2025-09-04T01:00:00+02:00","time_end":"2025-09-04T02:00:00+02:00"},
+             {"SEK_per_kWh":0.20,"EUR_per_kWh":0.02,"EXR":10.0,"time_start":"2025-09-04T02:00:00+02:00","time_end":"2025-09-04T03:00:00+02:00"},
+             {"SEK_per_kWh":0.10,"EUR_per_kWh":0.01,"EXR":10.0,"time_start":"2025-09-04T03:00:00+02:00","time_end":"2025-09-04T04:00:00+02:00"}]""";
 
         ElpriserAPI.setMockResponse(mockJson);
 
@@ -158,16 +158,20 @@ class MainTest {
 
         // Expected sorted output (ascending by price)
         List<String> expectedOrder = List.of(
-                "01-02 10,00 öre",
-                "03-04 10,00 öre",
-                "02-03 20,00 öre",
-                "00-01 30,00 öre"
+                "2025-09-04    00-01         30,00 öre",
+                "2025-09-04    00-01         30,00 öre",
+                "2025-09-04    02-03         20,00 öre",
+                "2025-09-04    02-03         20,00 öre",
+                "2025-09-04    01-02         10,00 öre",
+                "2025-09-04    03-04         10,00 öre",
+                "2025-09-04    01-02         10,00 öre",
+                "2025-09-04    03-04         10,00 öre"
         );
 
         // Extract actual lines that match the pattern
         List<String> actualSortedLines = Arrays.stream(output.split("\n"))
                 .map(String::trim) // 1. Trim leading/trailing whitespace
-                .filter(line -> line.matches("^\\d{2}-\\d{2}\\s+\\d+,\\d{2}\\s+öre$")) // 2. Use a more flexible regex
+                .filter(line -> line.matches("^\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}-\\d{2}\\s+\\d+,\\d{2}\\s+öre$")) // 2. Use a more flexible regex
                 .collect(Collectors.toList());
 
         // Assert that actual lines match expected order
