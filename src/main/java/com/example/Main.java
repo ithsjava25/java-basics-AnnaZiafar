@@ -22,9 +22,9 @@ public class Main {
     private static final int QUARTERS_IN_HOUR = 4;
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.of("sv", "SE"));
 
         String zone = whichZone(args);
-
         if(zone == null){
             return;
         }
